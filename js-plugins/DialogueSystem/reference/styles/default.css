@@ -1,0 +1,55 @@
+html, body
+{
+    height : 100%;
+}
+
+body
+{
+    margin : 0;
+    background : black;
+    color : white;
+    font-family : "lightweight";
+    font-size : 4.44vw;
+    line-height : 6.11vw;
+    display : flex;
+}
+
+.dialogue-box
+{
+    background : black;
+    width : 91.67vw;
+    height : 18.06vw;
+    padding : 2.78vw;
+    border : 0.83vw solid white;
+    margin : auto;
+    overflow-wrap : break-word;
+    visibility : hidden;
+}
+
+.dialogue-box[data-enabled="true"]
+{
+    visibility : visible;
+}
+
+.dialogue-portrait
+{
+    height : 100%;
+    image-rendering : pixelated;
+}
+
+.dialogue-box[data-portrait-enabled="true"] .dialogue-line
+{
+    width : 80%;
+}
+
+@font-face
+{
+    font-family : "lightweight";
+    src : url("/fonts/lightweight.ttf");
+}
+
+@keyframes box
+{
+    from { transform : scaleY(0); }
+    to { transform : none; }
+}
