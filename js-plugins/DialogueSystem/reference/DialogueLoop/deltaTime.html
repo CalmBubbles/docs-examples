@@ -68,8 +68,12 @@ DialogueLoop.Append(() => {
 
 // Update ball A
 DialogueLoop.Append(() => {
-    // Use fps slice as multiplier 
-    posA += 250 * (1 / DialogueLoop.targetFrameRate);
+    // Move 4 units "per frame"
+    //
+    // This only works fine if fps is exactly 60
+    // Lag and lag-spikes will break this
+    // Movement varies
+    posA += 4;
     
     // Set position and update timer
     pain.style.transform = `translateX(${posA}%)`;
@@ -88,8 +92,15 @@ DialogueLoop.Append(() => {
 
 // Update ball B
 DialogueLoop.Append(() => {
-    // Use deltaTime as multipier
-    posB += 250 * DialogueLoop.deltaTime;
+    // Move 240 units "per second"
+    //
+    // This is the same as ball A
+    // except using deltaTime
+    //
+    // This works in every fps
+    // Lag and lag-spikes will not break this
+    // Movement is constant
+    posB += 240 * DialogueLoop.deltaTime;
     
     smooth.style.transform = `translateX(${posB}%)`;
     timeB.textContent = DialogueLoop.time;
@@ -104,10 +115,8 @@ DialogueLoop.Append(() => {
 
 
 /**
- * NOTE:
- *     deltaTime is similar to
- *     fps slice (1 / targetFrameRate)
- *     during smooth runtime or minimum lag
+ * NOTE: Ball B will finish around 2.7 seconds
+ *       Ball A hovever, varies
  */
 
         </script>
