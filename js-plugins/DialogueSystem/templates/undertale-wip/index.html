@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        <style>
+
+html, body
+{
+    width: 100%;
+    height: 100%;
+}
+
+body
+{
+    background: black;
+    margin: 0;
+    display: flex;
+    overflow: clip;
+}
+
+.textbox
+{
+    margin: auto;
+}
+
+/* #ref
+{
+    position: absolute;
+    image-rendering: pixelated;
+    width: 98vw;
+    opacity: 0.25;
+} */
+
+        </style>
+    </head>
+    
+    <body>
+        <!-- <img id="ref" src="ref3.png"> -->
+        <!-- <div data-portrait-enabled="true" font-index="1" class="textbox"><div class="asterisk">*</div><div class="dialogue-line">heheh<span class="dot">...</span> the old whoopee cushion in the hand trick<span class="dot">.</span></div></div> -->
+
+        <div data-enabled="false" id="textbox" class="textbox"></div>
+
+        <script src="/js-plugins/DialogueSystem.js"></script>
+        <script src="../Loader.js"></script>
+        <script>
+
+const diaManager = new DialogueManager(textbox);
+
+const asterisk = document.createElement("div");
+asterisk.classList.add("asterisk");
+let asterisks = [];
+for (let i = 0; i < 3; i++)
+{
+    const span = document.createElement("span");
+    span.style.visibility = "hidden";
+    span.append("*");
+    asterisks.push(span);
+}
+asterisk.append(...asterisks);
+textbox.insertBefore(asterisk, diaManager.dialogueLine);
+
+diaManager.soundInterval = 2;
+
+function SetAsterisk (b, c, a)
+{
+    diaManager.Once(DialogueEvent.TypingEnter, () => {
+        asterisks[0].style.visibility = (a ?? true) ? "" : "hidden";
+        asterisks[1].style.visibility = b ? "" : "hidden";
+        asterisks[2].style.visibility = c ? "" : "hidden";
+    });
+}
+
+function SetFont (index)
+{
+    textbox.setAttribute("font-index", index);
+}
+
+diaManager.On(DialogueEvent.TypingEnter, async () => {
+    const spaces = diaManager.characters.filter(item => item.target.textContent === " " && item.audio != null);
+
+    for (let i = 0; i < spaces.length; i++) spaces[i].audio = null;
+
+    const dots = diaManager.characters.filter(item => item.target.textContent === "." && !item.target.classList.contains("dot"));
+
+    for (let i = 0; i < dots.length; i++) dots[i].target.classList.add("dot");
+});
+
+
+Loader.onFail = () => SetAsterisk();
+Loader.Set();
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,96 @@
+.textbox
+{
+    --base-width: 98;
+    --scaler: calc(var(--base-width) / 1333);
+
+    font-family: "Determination";
+    background: black;
+    color: white;
+    width: calc(var(--scaler) * 1306vw);
+    border: calc(var(--scaler) * 14.059vw) solid white;
+    height: calc(var(--scaler) * 324vw);
+    font-size: calc(var(--scaler) * 61.57vw);
+    letter-spacing: calc(var(--scaler) * -0.054vw);
+    line-height: calc(var(--scaler) * 83vw);
+    user-select: none;
+}
+
+.textbox[data-enabled="false"]
+{
+    visibility: hidden;
+}
+
+.textbox[font-index="1"]
+{
+    font-family: "sans";
+    font-size: calc(var(--scaler) * 73.8vw);
+    letter-spacing: 0;
+}
+
+.textbox .dialogue-line
+{
+    display: inline-block;
+    margin-top: calc(var(--scaler) * 28.6vw);
+    margin-left: calc(var(--scaler) * 32.1vw);
+    width: calc(var(--scaler) * 1160vw);
+}
+
+.textbox[data-portrait-enabled="true"] .dialogue-line
+{
+    width: calc(var(--scaler) * 888vw);
+}
+
+.textbox[font-index="1"] .dialogue-line
+{
+    margin-left: calc(var(--scaler) * 36.8vw);
+    margin-top: calc(var(--scaler) * 41.8vw);
+}
+
+.textbox .dialogue-portrait
+{
+    pointer-events: none;
+    position: absolute;
+    image-rendering: pixelated;
+    padding-top: calc(var(--scaler) * 55.5vw);
+    padding-left: calc(var(--scaler) * 65vw);
+    width: calc(var(--scaler) * 184.5vw);
+}
+
+.textbox .asterisk
+{
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-left: calc(var(--scaler) * 51.0077vw);
+    margin-top: calc(var(--scaler) * 28.6vw);
+    width: calc(var(--scaler) * 37.194vw);
+    word-wrap: break-word;
+}
+
+.textbox[data-portrait-enabled="true"] .asterisk
+{
+    margin-left: calc(var(--scaler) * 318.5vw);
+}
+
+.textbox[font-index="1"] .asterisk
+{
+    margin-top: calc(var(--scaler) * 41.8vw);
+}
+
+.textbox[font-index="1"] .dot
+{
+    margin-left: calc(var(--scaler) * 4.5vw);
+    margin-right: calc(var(--scaler) * -4.5vw);
+}
+
+@font-face
+{
+    font-family: "Determination";
+    src: url("fonts/DTM-Mono.otf");
+}
+
+@font-face
+{
+    font-family: "sans";
+    src: url("fonts/Comic Sans UT.ttf");
+}

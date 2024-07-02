@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        <style>
+
+html, body
+{
+    height: 100%;
+}
+
+body
+{
+    background: black;
+    margin: 0;
+    display: flex;
+    overflow: clip;
+}
+
+.textbox-wrap
+{
+    margin: auto;
+}
+
+        </style>
+    </head>
+    
+    <body>
+        <div class="textbox-wrap"><div data-enabled="false" id="textbox" class="textbox"></div></div>
+
+        <script src="/js-plugins/DialogueSystem.js"></script>
+        <script src="../Loader.js"></script>
+        <script>
+
+const diaManager = new DialogueManager(textbox);
+
+const nameDiv = document.createElement("div");
+nameDiv.setAttribute("data-enabled", false);
+nameDiv.classList.add("name");
+
+const imgBox = document.createElement("div");
+imgBox.setAttribute("data-enabled", false);
+imgBox.classList.add("img-box");
+
+const cursorImg = document.createElement("img");
+cursorImg.src = "img/cursor_menu.png";
+cursorImg.style.opacity = 0;
+cursorImg.classList.add("cursor");
+
+textbox.append(nameDiv, imgBox, cursorImg);
+
+const portrait = diaManager.dialoguePortrait;
+portrait.style.display = "inline-block";
+portrait.style.visibility = "visible";
+portrait.setAttribute("data-enabled", false);
+
+diaManager.config.audios.items.push(new DialogueAudioClip("default", "audio/[SE]-TEXT.ogg"));
+
+diaManager.animation.box.onEnable = new DialogueAnimation({
+    animation: "linear box",
+    duration: 0.2
+});
+diaManager.animation.box.onDisable = new DialogueAnimation({
+    animation: "reverse linear box",
+    duration: 0.2
+});
+
+class OmoriAudioSource extends DialogueAudioSource
+{
+    get pitch ()
+    {
+        return super.pitch * (Math.random() * (1.1 - 0.9) + 0.9);
+    }
+
+    get basePitch ()
+    {
+        return super.pitch;
+    }
+}
+
+diaManager.audioSource = new OmoriAudioSource();
+diaManager.audioSource.volume = 0.5;
+
+let enablePortrait = false;
+let portraitEnabled = false;
+let nameEnabled = false;
+let cursorEnabling = false;
+let endCursorEnable = false;
+let charName = null;
+
+function SetFont (index)
+{
+    textbox.setAttribute("font-2", index === 1 ? true : false);
+}
+
+function ChangeName (name)
+{
+    nameDiv.textContent = name;
+}
+
+function ShakeScreen (duration, intensity)
+{
+    let done = false;
+    let time = 0;
+
+    DialogueLoop.Append(() => {
+        if (done) return;
+
+        if (time >= duration)
+        {
+            document.body.style.transform = "";
+
+            done = true;
+
+            return;
+        }
+
+        const pos = (Math.random() * 2 - 1) * (intensity * ((duration - time) / duration * 0.25));
+
+        document.body.style.transform = `translateY(${pos}%)`;
+
+        time += DialogueLoop.deltaTime;
+    }, null, () => done);
+}
+
+async function DiaSetActive (state)
+{
+    if (state)
+    {
+        const duration = diaManager.animation.box.onEnable.duration;
+        
+        if (enablePortrait) 
+        {
+            portrait.style.animation = `linear subBox ${duration}s`;
+            portrait.setAttribute("data-enabled", true);
+
+            imgBox.style.animation = `linear subBox ${duration}s`;
+            imgBox.setAttribute("data-enabled", true);
+        }
+
+        if (charName != null)
+        {
+            ChangeName(charName);
+            nameDiv.style.animation = `linear nameDivEnter ${duration}s`;
+            nameDiv.setAttribute("data-enabled", true);
+        }
+
+        await diaManager.SetActive(true);
+
+        if (enablePortrait) 
+        {
+            portrait.style.animation = "";
+            imgBox.style.animation = "";
+
+            enablePortrait = false;
+            portraitEnabled = true;
+        }
+
+        if (charName != null)
+        {
+            nameDiv.style.animation = "";
+
+            charName = null;
+            nameEnabled = true;
+        }
+
+        return;
+    }
+
+    if (cursorEnabling) endCursorEnable = true;
+
+    cursorImg.style.opacity = 0;
+    cursorImg.style.transition = "";
+    cursorImg.style.animation = "";
+
+    const duration = diaManager.animation.box.onDisable.duration;
+
+    if (portraitEnabled)
+    {
+        portrait.style.animation = "";
+        
+        requestAnimationFrame(() => portrait.style.animation = `reverse linear subBox ${duration}s`);
+
+        imgBox.style.animation = `reverse linear subBox ${duration}s`;
+        imgBox.setAttribute("data-enabled", false);
+    }
+
+    if (nameEnabled)
+    {
+        nameDiv.style.animation = `linear nameDivExit ${duration}s`;
+        nameDiv.setAttribute("data-enabled", false);
+    }
+
+    await diaManager.SetActive(false);
+
+    if (portraitEnabled) 
+    {
+        portrait.style.animation = "";
+        portrait.setAttribute("data-enabled", false);
+        imgBox.style.animation = "";
+
+        portraitEnabled = false;
+    }
+
+    if (nameEnabled)
+    {
+        nameDiv.style.animation = "";
+
+        nameEnabled = false;
+    }
+
+    await DialogueLoop.Delay(DialogueLoop.deltaTime);
+}
+
+diaManager.On(DialogueEvent.Clear, () => {
+    if (!portraitEnabled) return;
+
+    portrait.src = diaManager.config.sprites.Find("null").spriteURL;
+    portrait.style.display = "inline-block";
+    portrait.style.visibility = "visible";
+});
+diaManager.On(DialogueEvent.TypingEnter, () => {
+    if (cursorEnabling) endCursorEnable = true;
+
+    cursorImg.style.opacity = 0;
+    cursorImg.style.transition = "";
+    cursorImg.style.animation = "";
+});
+diaManager.On(DialogueEvent.TypingExit, () => {
+    cursorEnabling = true;
+
+    cursorImg.style.opacity = 1;
+    cursorImg.style.transition = "opacity 0.25s";
+
+    let time = 0;
+
+    DialogueLoop.Append(() => {
+        if (endCursorEnable)
+        {
+            endCursorEnable = false;
+            cursorEnabling = false;
+
+            return;
+        }
+
+        if (time < 0.25)
+        {
+            time += DialogueLoop.deltaTime;
+
+            return;
+        }
+
+        cursorImg.style.transition = "";
+        cursorImg.style.animation = "alternate cursor 0.5s linear infinite";
+
+        cursorEnabling = false;
+    }, null, () => !cursorEnabling);
+});
+
+
+Loader.Set();
+
+        </script>
+    </body>
+</html>

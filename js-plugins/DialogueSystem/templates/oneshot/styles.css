@@ -1,0 +1,84 @@
+.textbox
+{
+    --base-width: 98;
+    --scaler: calc(var(--base-width) / 1333);
+    
+    font-family: "Terminus";
+    image-rendering: pixelated;
+    color: white;
+    position: relative;
+    background-image: url("img/box.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: calc(var(--scaler) * 1333.5vw);
+    height: calc(var(--scaler) * 281vw);
+    font-size: calc(var(--scaler) * 44.2vw);
+    letter-spacing: calc(var(--scaler) * -0.2vw);
+    line-height: calc(var(--scaler) * 52.4954vw);
+    user-select: none;
+    overflow: clip;
+}
+
+.textbox[data-enabled="false"]
+{
+    opacity: 0;
+}
+
+.textbox .dialogue-line
+{
+    margin-top: calc(var(--scaler) * 34vw);
+    margin-left: calc(var(--scaler) * 44.3968vw);
+    display: inline-block;
+    width: calc(var(--scaler) * 1040vw);
+    height: calc(var(--scaler) * 208.2813vw);
+    word-wrap: break-word;
+}
+
+.textbox[data-portrait-enabled="false"] .dialogue-line
+{
+    width: calc(var(--scaler) * 1237.9982vw);
+}
+
+.textbox img
+{
+    pointer-events: none;
+}
+
+.textbox .dialogue-portrait
+{
+    float: right;
+    margin-top: calc(var(--scaler) * 35.0789vw);
+    margin-right: calc(var(--scaler) * 35.0789vw);
+    width: calc(var(--scaler) * 208.939vw);
+}
+
+.textbox .arrow
+{
+    width: calc(var(--scaler) * 35.9011vw);
+    bottom: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: alternate arrow 0.25s steps(2, jump-none) infinite;
+}
+
+@font-face
+{
+    font-family: "Terminus";
+    src: url("fonts/TerminusTTF-Bold.ttf");
+}
+
+@keyframes arrow {
+    0% { bottom: 0; }
+
+    50% { bottom: calc(var(--scaler) * -2.1924vw); }
+
+    100% { bottom: calc(var(--scaler) * -4.3849vw); }
+}
+
+@keyframes box
+{
+    from { opacity: 0; }
+    
+    to { opacity: 1; }
+}

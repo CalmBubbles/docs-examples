@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+        
+        <style>
+
+html, body
+{
+    height : 100%;
+}
+
+body
+{
+    margin : 0;
+    background : black;
+    color : white;
+    display : flex;
+    user-select: none;
+    overflow: clip;
+}
+
+.dialogue-box
+{
+    background : black;
+
+    /* It may not look like it, but dynamic units like `vw` and `%` can
+       work like fixed units if everything is proportional to each other */
+    width : 91.67vw;
+    height : 18.06vw;
+    padding : 2.78vw;
+    border : 0.83vw solid white;
+    font-family : "lightweight"; /* Use any font */
+    font-size : 4.44vw;
+    line-height : 6.11vw;
+    margin: auto;
+}
+
+.dialogue-line
+{
+    width: 100%;
+}
+
+@font-face
+{
+    font-family : "lightweight";
+    src : url("/fonts/lightweight.ttf");
+}
+
+        </style>
+    </head>
+    
+    <body>
+        <!--
+            Never add any whitespaces or line breaks in the mockup.
+            The dialogue line is also required to be a div
+        -->
+        <div class="dialogue-box"><div class="dialogue-line">This is a mockup preview.</div></div>
+    </body>
+</html>

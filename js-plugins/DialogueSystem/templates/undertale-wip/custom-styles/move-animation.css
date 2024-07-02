@@ -1,0 +1,16 @@
+@keyframes move-animation
+{
+    from { left: 0; }
+    to { left: 100vw; }
+}
+
+@keyframes move-step-animation
+{
+    0% { transform: none; }
+    20% { transform: rotate(30deg); }
+    40% { transform: translateY(-17%) rotate(18deg); }
+    50% { transform: translateY(-20%) rotate(10deg); }
+    70% { transform: rotate(-30deg); }
+    78% { transform: rotate(-8deg); }
+    100% { transform: none; }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        <style>
+
+html, body
+{
+    height: 100%;
+}
+
+body
+{
+    background: black;
+    margin: 0;
+    display: flex;
+    overflow: clip;
+}
+
+.textbox
+{
+    margin: auto;
+}
+
+        </style>
+    </head>
+    
+    <body>
+        <div data-enabled="false" id="textbox" class="textbox"></div>
+
+        <script src="/js-plugins/DialogueSystem.js"></script>
+        <script src="../Loader.js"></script>
+        <script>
+
+const diaManager = new DialogueManager(textbox);
+
+const arrowImg = document.createElement("img");
+arrowImg.src = "img/arrow.png";
+arrowImg.style.display = "none";
+arrowImg.classList.add("arrow");
+textbox.append(arrowImg)
+
+diaManager.portraitPosition = DialoguePortraitPosition.Right;
+diaManager.audioSource.volume = 0.6;
+diaManager.soundInterval = 4;
+
+diaManager.config.audios = new DialogueAudioArray(
+    [
+        { name: "default", src: "text.wav" },
+        { name: "robot", src: "text_robot.wav" }
+    ],
+    "audio"
+);
+
+diaManager.animation.box.onEnable = new DialogueAnimation({
+    animation: "box",
+    duration: 0.125
+});
+diaManager.animation.box.onDisable = new DialogueAnimation({
+    animation: "reverse box",
+    duration: 0.125
+});
+
+diaManager.On(DialogueEvent.TypingEnter, () => arrowImg.style.display = "none");
+diaManager.On(DialogueEvent.TypingExit, () => arrowImg.style.display = "");
+
+
+Loader.Set();
+
+        </script>
+    </body>
+</html>

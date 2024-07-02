@@ -7,6 +7,14 @@
         
         <style>
 
+html
+{
+    background: black;
+    color: white;
+    font-family: monospace;
+    scrollbar-color: white black;
+}
+
 html, body
 {
     overflow : clip;
@@ -25,39 +33,32 @@ div
         </style>
     </head>
     
-    <body style="background : white">
-        <!--Set text-->
+    <body>
+        <!--Text-->
         fps : <span id="fps">...</span><br>
         w/o deltaTime : <span id="timeA">0</span><br>
         w/ deltaTime : <span id="timeB">0</span><br>
         
-        <!--Set balls 🗿-->
+        <!--Balls 🗿-->
         <div id="pain"></div>
         <div id="smooth"></div>
         
         <script src="/js-plugins/DialogueSystem.js" type="text/javascript"></script>
         <script type="text/javascript">
 
-// Get text
-const fps = document.querySelector("#fps");
-const timeA = document.querySelector("#timeA");
-const timeB = document.querySelector("#timeB");
-
-// Get the b   a   l   l   s
-const pain = document.querySelector("#pain");
-const smooth = document.querySelector("#smooth");
-
 let posA = 0;
 let posB = 0;
 let doneA = 0;
 let doneB = 0;
+
 
 // Update fps meter every half of a sec
 DialogueLoop.Append(() => {
     fps.textContent = parseInt(1 / DialogueLoop.deltaTime);
 }, 0.5);
 
-// Generate random lag spikes
+
+// Generate lag spikes
 DialogueLoop.Append(() => {
     if (DialogueLoop.time < 0.5) return;
     
@@ -65,6 +66,7 @@ DialogueLoop.Append(() => {
     
     while (performance.now() < targetTime) { }
 }, 0, () => doneA && doneB);
+
 
 // Update ball A
 DialogueLoop.Append(() => {
@@ -83,12 +85,14 @@ DialogueLoop.Append(() => {
     
     // if done
     
+    // End update
     doneA = true;
     
     // Set ball color and snap it to target position
     pain.style.background = "green";
     pain.style.transform = "translateX(650%)";
 }, 0, () => doneA);
+
 
 // Update ball B
 DialogueLoop.Append(() => {
@@ -114,9 +118,10 @@ DialogueLoop.Append(() => {
 }, 0, () => doneB);
 
 
+
 /**
- * NOTE: Ball B will finish around 2.7 seconds
- *       Ball A hovever, varies
+ * Ball B will finish around 2.7 seconds
+ * Ball A hovever, varies
  */
 
         </script>
