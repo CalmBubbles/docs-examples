@@ -1,4 +1,4 @@
-diaManager.config.sprites.items.push(new DialogueSprite("proto", "img/faces/proto_gasp2.png"));
+diaManager.config.sprites.items.push(new DialogueSprite("proto", "img/Faces/proto_gasp2.png"));
 
 async function Main ()
 {
