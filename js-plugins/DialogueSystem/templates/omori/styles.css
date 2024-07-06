@@ -23,7 +23,7 @@
     user-select: none;
 }
 
-.textbox[font-2="true"]
+.textbox[font-index="1"]
 {
     font-family: "OMORIGAME2";
 }
@@ -93,6 +93,7 @@
     padding-left: calc(var(--scaler) * 17vw);
     padding-right: calc(var(--scaler) * 19vw);
     height: calc(var(--scaler) * 76vw);
+    font-family: "OMORIGAME";
 }
 
 .textbox .name[data-enabled="false"]

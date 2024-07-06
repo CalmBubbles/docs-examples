@@ -65,10 +65,11 @@
 @font-face
 {
     font-family: "Terminus";
-    src: url("fonts/TerminusTTF-Bold.ttf");
+    src: url("fonts/TerminusTTF-Bold/main.ttf");
 }
 
-@keyframes arrow {
+@keyframes arrow
+{
     0% { bottom: 0; }
 
     50% { bottom: calc(var(--scaler) * -2.1924vw); }

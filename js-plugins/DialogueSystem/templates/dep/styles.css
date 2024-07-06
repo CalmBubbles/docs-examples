@@ -65,7 +65,7 @@
 @font-face
 {
     font-family: "DEP";
-    src: url("fonts/DEP.ttf");
+    src: url("fonts/DEP/main.ttf");
 }
 
 @keyframes box

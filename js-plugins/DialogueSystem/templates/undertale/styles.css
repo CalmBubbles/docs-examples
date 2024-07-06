@@ -86,11 +86,11 @@
 @font-face
 {
     font-family: "Determination";
-    src: url("fonts/DTM-Mono.otf");
+    src: url("fonts/DTM-Mono/main.otf");
 }
 
 @font-face
 {
     font-family: "sans";
-    src: url("fonts/Comic Sans UT.ttf");
+    src: url("fonts/Comic%20Sans%20UT/main.ttf");
 }
