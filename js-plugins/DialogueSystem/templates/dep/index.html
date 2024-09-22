@@ -57,7 +57,7 @@ diaManager.animation.box.onDisable = new DialogueAnimation({
 
 diaManager.On(DialogueEvent.TypingEnter, () => arrow.style.display = "none");
 diaManager.On(DialogueEvent.TypingExit, () => arrow.style.display = "");
-diaManager.On(DialogueEvent.LineClear, () => arrowImg.style.display = "none");
+diaManager.On(DialogueEvent.LineClear, () => arrow.style.display = "none");
 
 
 Loader.Set();
