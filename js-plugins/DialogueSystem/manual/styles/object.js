@@ -36,8 +36,8 @@ class TextWave extends DialogueTextAnimation
 
     OnSet (parameters)
     {
-        this.#intensity = parameters.Find("intensity").value ?? 14;
-        this.#speed = parameters.Find("speed").value ?? 14;
+        this.#intensity = parameters.Find("intensity")?.value ?? 14;
+        this.#speed = parameters.Find("speed")?.value ?? 14;
     }
 
     Update ()
